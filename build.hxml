@@ -1,7 +1,9 @@
 -main Main
 
--swf-header 800:480:60:000000
+-swf-header 800:480:60:AAAAAA
 -swf-version 11.3
+
+-lib hxdispose
 
 -cp src
 
@@ -14,6 +16,8 @@
 --next
 
 -main Main
+
+-lib hxdispose
 
 -cp src
 

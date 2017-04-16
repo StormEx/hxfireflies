@@ -12,7 +12,8 @@ class HxFirefliesMake extends hxmake.Module {
 		config.classPath = ["src"];
 		config.testPath = ["test"];
 		config.devDependencies = [
-			"utest" => "haxelib"
+			"utest" => "haxelib",
+			"hxdispose" => "haxelib"
 		];
 
 		apply(HaxelibPlugin);
@@ -34,7 +35,7 @@ class HxFirefliesMake extends hxmake.Module {
 
 		var tt = new TestTask();
 		tt.targets = ["neko", "swf", "js", "node", "cpp", "java", "cs", "php"];
-		tt.libraries = ["hxfireflies"];
+		tt.libraries = ["hxfireflies", "hxdispose"];
 		task("test", tt);
 	}
 }
