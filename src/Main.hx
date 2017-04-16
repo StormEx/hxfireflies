@@ -1,5 +1,6 @@
 package ;
 
+import hxfireflies.area.RectangleArea;
 import hxdispose.DisposableArray;
 import hxdispose.Dispose;
 import hxfireflies.Emitter;
@@ -11,6 +12,7 @@ class Main {
 
 	public static function main() {
 		var em:Emitter = new Emitter();
+		em.area = new RectangleArea();
 		Dispose.dispose(em);
 
 		var da:DisposableArray<Emitter> = [];
