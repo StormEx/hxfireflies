@@ -1,0 +1,15 @@
+{
+	"name": "hxfireflies",
+	"license": "MIT",
+	"tags": [
+		"particles"
+	],
+	"classPath": "src",
+	"description": "Simple particles",
+	"contributors": [
+		"storm_ex"
+	],
+	"releasenote": "Initial release",
+	"version": "0.0.1",
+	"url": "https://github.com/StormEx/hxfireflies"
+}

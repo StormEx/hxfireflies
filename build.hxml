@@ -1,0 +1,24 @@
+-main Main
+
+-swf-header 800:480:60:000000
+-swf-version 11.3
+
+-cp src
+
+-swf export/flash/hxfireflies.swf
+
+-D fdb
+
+-debug
+
+--next
+
+-main Main
+
+-cp src
+
+-js export/js/hxfireflies.js
+
+-D fdb
+
+-debug
