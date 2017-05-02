@@ -1,5 +1,7 @@
 package hxfireflies.area;
 
+import hxfireflies.particle.IParticle;
+
 class PointArea implements IArea {
 	@:isVar public var x(get, set):Float;
 	@:isVar public var y(get, set):Float;

@@ -1,5 +1,8 @@
-package hxfireflies;
+package hxfireflies.emitter;
 
+import hxfireflies.particle.IParticleView;
+import hxfireflies.particle.IParticle;
+import hxfireflies.particle.Particle;
 import hxfireflies.pool.Pool;
 import hxfireflies.pool.IPool;
 import haxe.macro.Expr;
@@ -7,20 +10,10 @@ import hxdispose.Dispose;
 import hxfireflies.area.PointArea;
 import hxfireflies.area.IArea;
 
-class Emitter implements IEmitter {
-	public var x(get, set):Float;
-	public var y(get, set):Float;
-	public var area(default, set):IArea;
+class Emitter extends Particle implements IEmitter {
+	public var data(get, set):IEmitterData;
 
 	public var pool(default, set):IPool;
-
-	public var lifetime:Float = .0;
-	public var lifeTimeDelta:Float = .0;
-
-	public var xVelocity:Float = .0;
-	public var xVelocityDelta:Float = .0;
-	public var yVelocity:Float = .0;
-	public var yVelocityDelta:Float = .0;
 
 	public var r(default, set):Float = 1.0;
 	public var rDelta(default, set):Float = .0;
@@ -31,20 +24,28 @@ class Emitter implements IEmitter {
 	public var a(default, set):Float = 1.0;
 	public var aDelta(default, set):Float = .0;
 
-	public function new() {
-		area = createArea();
+	public function new(view:IParticleView = null) {
+		super(view);
+
 		pool = createPool();
 
 		normalize();
 	}
 
-	public function dispose() {
-		Dispose.dispose(area);
+	override public function dispose() {
+		super.dispose();
+
 		Dispose.dispose(pool);
 	}
 
-	public function update(dt:Float) {
+	override public function update(dt:Float) {
+		super.update(dt);
+
 		pool.update(dt);
+	}
+
+	override public function clone():IParticle {
+		return null;
 	}
 
 	function createArea():IArea {
@@ -80,28 +81,12 @@ class Emitter implements IEmitter {
 		};
 	}
 
-	function get_x():Float {
-		return area.x;
+	function get_data():IEmitterData {
+		return null;
 	}
 
-	function set_x(value:Float):Float {
-		return area.x = value;
-	}
-
-	function get_y():Float {
-		return area.y;
-	}
-
-	function set_y(value:Float):Float {
-		return area.y = value;
-	}
-
-	inline function set_area(value:IArea):IArea {
-		if(area != value) {
-			area = value == null ? createArea() : value;
-		}
-
-		return area;
+	function set_data(value:IEmitterData):IEmitterData {
+		return null;
 	}
 
 	inline function set_pool(value:IPool):IPool {

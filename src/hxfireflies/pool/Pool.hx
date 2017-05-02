@@ -1,5 +1,8 @@
 package hxfireflies.pool;
 
+import hxfireflies.particle.IParticleView;
+import hxfireflies.particle.Particle;
+import hxfireflies.particle.IParticle;
 import hxdispose.Dispose;
 import hxdispose.DisposableArray;
 
@@ -15,7 +18,7 @@ class Pool implements IPool {
 			_max = max;
 		}
 
-		prototype = createPrototype();
+		prototype = createPrototype(null);
 	}
 
 	public function dispose() {
@@ -38,8 +41,8 @@ class Pool implements IPool {
 	function increasePool() {
 	}
 
-	function createPrototype() {
-		return new Particle();
+	function createPrototype(view:IParticleView) {
+		return new Particle(view);
 	}
 
 	inline function set_prototype(value:IParticle):IParticle {

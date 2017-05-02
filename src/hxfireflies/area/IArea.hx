@@ -1,5 +1,6 @@
 package hxfireflies.area;
 
+import hxfireflies.particle.IParticle;
 import hxdispose.IDisposable;
 
 interface IArea extends IDisposable {

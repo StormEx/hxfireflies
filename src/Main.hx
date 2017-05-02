@@ -1,22 +1,23 @@
 package ;
 
-import hxfireflies.area.RectangleArea;
 import hxdispose.DisposableArray;
 import hxdispose.Dispose;
-import hxfireflies.Emitter;
+import hxfireflies.emitter.Emitter;
 
 class Main {
-
 	public function new() {
 	}
 
 	public static function main() {
 		var em:Emitter = new Emitter();
-		em.area = new RectangleArea();
 		Dispose.dispose(em);
 
 		var da:DisposableArray<Emitter> = [];
 		Dispose.dispose(da);
+
+#if flash
+		new dl.DLMain();
+#end
 
 		trace("fireflies");
 	}

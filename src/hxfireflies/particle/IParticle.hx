@@ -1,10 +1,10 @@
-package hxfireflies;
+package hxfireflies.particle;
 
 import hxdispose.IDisposable;
 
 interface IParticle extends IDisposable {
-	public var x:Float;
-	public var y:Float;
+	public var x(get, set):Float;
+	public var y(get, set):Float;
 
 	public var lifetime:Float;
 

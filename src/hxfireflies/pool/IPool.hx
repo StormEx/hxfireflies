@@ -1,5 +1,6 @@
 package hxfireflies.pool;
 
+import hxfireflies.particle.IParticle;
 import hxdispose.IDisposable;
 
 interface IPool extends IDisposable {
