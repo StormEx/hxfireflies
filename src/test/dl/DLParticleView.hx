@@ -1,0 +1,50 @@
+package test.dl;
+
+import flash.display.Shape;
+import flash.Lib;
+import hxfireflies.particle.IParticleView;
+
+class DLParticleView implements IParticleView {
+	public var x(get, set):Float;
+	public var y(get, set):Float;
+
+	public var shape:Shape = null;
+
+	var _radius:Float = 20;
+
+	public function new(radius:Float = 20) {
+		_radius = radius;
+		shape = new Shape();
+		shape.graphics.beginFill(0xFF0000);
+		shape.graphics.drawCircle(0, 0, radius);
+		shape.graphics.endFill();
+
+		Lib.current.addChild(shape);
+	}
+
+	public function dispose() {
+		Lib.current.removeChild(shape);
+
+		shape = null;
+	}
+
+	public function clone():IParticleView {
+		return new DLParticleView(_radius);
+	}
+
+	function get_x():Float {
+		return shape.x;
+	}
+
+	function set_x(value:Float):Float {
+		return shape.x = value;
+	}
+
+	function get_y():Float {
+		return shape.y;
+	}
+
+	function set_y(value:Float):Float {
+		return shape.y = value;
+	}
+}

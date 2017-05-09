@@ -11,7 +11,7 @@ import hxfireflies.area.PointArea;
 import hxfireflies.area.IArea;
 
 class Emitter extends Particle implements IEmitter {
-	public var data(get, set):IEmitterData;
+	public var data(default, set):IEmitterData;
 
 	public var pool(default, set):IPool;
 
@@ -23,6 +23,8 @@ class Emitter extends Particle implements IEmitter {
 	public var bDelta(default, set):Float = .0;
 	public var a(default, set):Float = 1.0;
 	public var aDelta(default, set):Float = .0;
+
+	var _time:Float = 0;
 
 	public function new(view:IParticleView = null) {
 		super(view);
@@ -42,6 +44,7 @@ class Emitter extends Particle implements IEmitter {
 		super.update(dt);
 
 		pool.update(dt);
+		_time += dt;
 	}
 
 	override public function clone():IParticle {
@@ -82,11 +85,21 @@ class Emitter extends Particle implements IEmitter {
 	}
 
 	function get_data():IEmitterData {
-		return null;
+		return data;
 	}
 
 	function set_data(value:IEmitterData):IEmitterData {
-		return null;
+		return data = value;
+	}
+
+	override function set_x(value:Float):Float {
+		data.area.x = value;
+		return super.set_x(value);
+	}
+
+	override function set_y(value:Float):Float {
+		data.area.y = value;
+		return super.set_y(value);
 	}
 
 	inline function set_pool(value:IPool):IPool {

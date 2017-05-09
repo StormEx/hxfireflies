@@ -1,16 +1,17 @@
 package hxfireflies.pool;
 
+import hxfireflies.emitter.IEmitterData;
 import hxfireflies.particle.IParticleView;
 import hxfireflies.particle.Particle;
 import hxfireflies.particle.IParticle;
 import hxdispose.Dispose;
-import hxdispose.DisposableArray;
 
 class Pool implements IPool {
 	public var prototype(default, set):IParticle;
 	public var length(get, never):Int;
 
-	var _pool:DisposableArray<IParticle> = [];
+	var _pool:Array<IParticle> = [];
+	var _count:Int = 0;
 	var _max:Int = 50;
 
 	public function new(max:Int = 50) {
@@ -22,26 +23,51 @@ class Pool implements IPool {
 	}
 
 	public function dispose() {
-		Dispose.dispose(_pool);
+		Dispose.disposeIterable(_pool);
 	}
 
 	public function update(dt:Float) {
-		for(p in _pool) {
-			p.update(dt);
+		var i:Int = 0;
+		while(i < _count) {
+			_pool[i].update(dt);
+			if(!_pool[i].isLife) {
+				remove(i);
+			}
+			else {
+				++i;
+			}
 		}
 	}
 
-	public function push(particle:IParticle) {
+	public function alloc(count:Int, data:IEmitterData) {
+		for(i in 0...count) {
+			var p:IParticle = null;
+			if(_count < _pool.length)
+			{
+				p = _pool[_count];
+			}
+			else {
+				p = prototype.clone();
+				_pool.push(p);
+				trace(_pool.length);
+
+			}
+			data.setup(p);
+			++_count;
+		}
 	}
 
-	public function pop():IParticle {
-		return null;
+	function remove(index:Int) {
+		--_count;
+		var tmp:IParticle = _pool[index];
+		_pool[index] = _pool[_count];
+		_pool[_count] = tmp;
 	}
 
 	function increasePool() {
 	}
 
-	function createPrototype(view:IParticleView) {
+	function createPrototype(view:IParticleView):IParticle {
 		return new Particle(view);
 	}
 
@@ -53,6 +79,6 @@ class Pool implements IPool {
 	}
 
 	function get_length():Int {
-		return _pool.length;
+		return _count;
 	}
 }
