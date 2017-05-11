@@ -1,5 +1,7 @@
 package test.js;
 
+import hxfireflies.emitter.EmitterData;
+import hxfireflies.particle.Particle;
 import hxfireflies.area.PointArea;
 import hxfireflies.emitter.IEmitterData;
 import hxfireflies.particle.IParticle;
@@ -32,12 +34,19 @@ class JsMain {
 	}
 
 	function createEmitterData():IEmitterData {
-		return new DLEmitterData();
+		var data:EmitterData = new EmitterData();
+		data.lifetime = 500;
+		data.lifetimeDelta = 15000;
+		data.scaleFrom = 1;
+		data.scaleTo = 0;
+		data.scaleYFrom = 1;
+		data.scaleYTo = 0;
+		return data;
 	}
 
 	function createPool():IPool {
-		var p:IPool = new Pool();
-		p.prototype = new JsParticle(new JsParticleView(12));
+		var p:Pool = new Pool();
+		p.prototype = new Particle(new JsParticleView(12));
 
 		return p;
 	}

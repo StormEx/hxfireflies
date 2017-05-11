@@ -16,7 +16,7 @@ class JsParticle extends Particle {
 		super.update(dt);
 
 		var v:JsParticleView = cast _view;
-		v.scale = (lifetime - time) / lifetime;
+		v.scaleY = v.scaleX = (lifetime - time) / lifetime;
 //		v.shape.scaleX = (lifetime - time) / lifetime;
 //		v.shape.scaleY = (lifetime - time) / lifetime;
 	}

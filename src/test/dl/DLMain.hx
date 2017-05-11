@@ -1,5 +1,7 @@
 package test.dl;
 
+import hxfireflies.particle.Particle;
+import hxfireflies.emitter.EmitterData;
 import hxfireflies.emitter.IEmitterData;
 import hxfireflies.particle.IParticle;
 import hxfireflies.pool.Pool;
@@ -32,12 +34,19 @@ class DLMain {
 	}
 
 	function createEmitterData():IEmitterData {
-		return new DLEmitterData();
+		var data:EmitterData = new EmitterData();
+		data.lifetime = 500;
+		data.lifetimeDelta = 1500;
+		data.scaleFrom = 1;
+		data.scaleTo = 0;
+		data.scaleYFrom = 1;
+		data.scaleYTo = 0;
+		return data;
 	}
 
 	function createPool():IPool {
-		var p:IPool = new Pool();
-		p.prototype = new DLParticle(new DLParticleView(12));
+		var p:Pool = new Pool();
+		p.prototype = new Particle(new DLParticleView(12));
 
 		return p;
 	}

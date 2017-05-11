@@ -8,6 +8,8 @@ import hxfireflies.particle.IParticleView;
 class JsParticleView implements IParticleView {
 	@:isVar public var x(get, set):Float;
 	@:isVar public var y(get, set):Float;
+	@:isVar public var scaleX(get, set):Float;
+	@:isVar public var scaleY(get, set):Float;
 	public var scale(default, set):Float = 1;
 
 	static public var ctx:CanvasRenderingContext2D = null;
@@ -34,16 +36,42 @@ class JsParticleView implements IParticleView {
 	function draw() {
 		if(ctx != null) {
 			ctx.beginPath();
-			ctx.ellipse(x, y, _radius * scale, _radius * scale, 45 * Math.PI/180, 0, 2 * Math.PI);
+			ctx.ellipse(x, y, _radius * scaleX, _radius * scaleY, 45 * Math.PI/180, 0, 2 * Math.PI);
 			ctx.fillStyle = "#FF0000";
 			ctx.fill();
 		}
 	}
 
 	function set_scale(value:Float):Float {
-		scale = value;
-		if(scale < 0) {
-			scale = 0;
+		scaleY = scaleX = value;
+		if(scaleX < 0) {
+			scaleY = scaleX = 0;
+		}
+		draw();
+		return scale;
+	}
+
+	function get_scaleX():Float {
+		return scaleX;
+	}
+
+	function set_scaleX(value:Float):Float {
+		scaleX = value;
+		if(scaleX < 0) {
+			scaleX = 0;
+		}
+		draw();
+		return scale;
+	}
+
+	function get_scaleY():Float {
+		return scaleY;
+	}
+
+	function set_scaleY(value:Float):Float {
+		scaleY = value;
+		if(scaleY < 0) {
+			scaleY = 0;
 		}
 		draw();
 		return scale;

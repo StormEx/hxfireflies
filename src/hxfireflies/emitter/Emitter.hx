@@ -40,6 +40,10 @@ class Emitter extends Particle implements IEmitter {
 		Dispose.dispose(pool);
 	}
 
+	public function emit(count:Int) {
+		pool.alloc(count, data);
+	}
+
 	override public function update(dt:Float) {
 		super.update(dt);
 

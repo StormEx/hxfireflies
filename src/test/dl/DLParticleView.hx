@@ -7,6 +7,8 @@ import hxfireflies.particle.IParticleView;
 class DLParticleView implements IParticleView {
 	public var x(get, set):Float;
 	public var y(get, set):Float;
+	public var scaleX(get, set):Float;
+	public var scaleY(get, set):Float;
 
 	public var shape:Shape = null;
 
@@ -30,6 +32,22 @@ class DLParticleView implements IParticleView {
 
 	public function clone():IParticleView {
 		return new DLParticleView(_radius);
+	}
+
+	function get_scaleX():Float {
+		return 0;
+	}
+
+	function set_scaleX(value:Float):Float {
+		return shape.scaleX = value;
+	}
+
+	function get_scaleY():Float {
+		return 0;
+	}
+
+	function set_scaleY(value:Float):Float {
+		return shape.scaleY = value;
 	}
 
 	function get_x():Float {

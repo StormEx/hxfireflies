@@ -1,10 +1,17 @@
 package hxfireflies.particle;
 
+import hxfireflies.animators.IAnimator;
 import hxdispose.Dispose;
 
 class Particle implements IParticle {
 	public var x(get, set):Float;
 	public var y(get, set):Float;
+	public var scaleX:Float = 1;
+	public var scaleXDelta:Float = 0;
+	public var scaleXAnimator:IAnimator = null;
+	public var scaleY:Float = 1;
+	public var scaleYDelta:Float = 0;
+	public var scaleYAnimator:IAnimator = null;
 	public var isLife(get, never):Bool;
 
 	public var lifetime:Float = -1.0;
@@ -24,13 +31,23 @@ class Particle implements IParticle {
 	}
 
 	public function update(dt:Float) {
+		var k:Float = 1;
 		if(lifetime >= 0) {
 			time += dt;
+
+			k = time / lifetime;
 		}
+
+		_view.scaleX = scaleX + calculateValue(k, scaleXDelta, scaleXAnimator);
+		_view.scaleY = scaleY + calculateValue(k, scaleYDelta, scaleYAnimator);
 	}
 
 	public function clone():IParticle {
 		return new Particle(_view.clone());
+	}
+
+	inline function calculateValue(progress:Float, value:Float, animator:IAnimator):Float {
+		return animator == null ? value * progress : animator.calculate(progress, value);
 	}
 
 	function get_isLife():Bool {
