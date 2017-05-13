@@ -21,8 +21,12 @@ class ArcArea implements IArea {
 	public function setup(particle:IParticle):IParticle {
 		var angle:Float = Math.PI * (angleFrom + Math.random() * (angleTo - angleFrom)) / 180;
 		var size:Float = Math.random() * radius;
-		particle.x = x + Math.cos(angle) * size;
-		particle.y = y + Math.sin(angle) * size;
+		var kx:Float = Math.cos(angle);
+		var ky:Float = Math.sin(angle);
+		particle.x = x + kx * size;
+		particle.y = y + ky * size;
+		particle.xVelocity = kx;
+		particle.yVelocity = ky;
 
 		return particle;
 	}

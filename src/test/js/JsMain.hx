@@ -1,5 +1,8 @@
 package test.js;
 
+import hxfireflies.animators.AnimatorIn;
+import hxfireflies.animators.AnimatorOut;
+import hxfireflies.animators.AnimatorLinear;
 import hxfireflies.emitter.EmitterData;
 import hxfireflies.particle.Particle;
 import hxfireflies.area.PointArea;
@@ -24,7 +27,7 @@ class JsMain {
 		_emitter.pool = createPool();
 		_emitter.data = createEmitterData();
 		_emitter.data.area = new CircleArea(14);
-		_emitter.data.area = new PointArea();
+//		_emitter.data.area = new PointArea();
 		_rEmitter = new DLEmitter(new JsParticleView());
 		_rEmitter.pool = createPool();
 		_rEmitter.data = createEmitterData();
@@ -36,11 +39,38 @@ class JsMain {
 	function createEmitterData():IEmitterData {
 		var data:EmitterData = new EmitterData();
 		data.lifetime = 500;
-		data.lifetimeDelta = 15000;
-		data.scaleFrom = 1;
-		data.scaleTo = 0;
-		data.scaleYFrom = 1;
+		data.lifetimeDelta = 1500;
+		data.scaleSimple = false;
+		data.scaleFrom = 0.5;
+		data.scaleFromDelta = 1;
+		data.scaleYFrom = 0.5;
+		data.scaleYFromDelta = 1;
 		data.scaleYTo = 0;
+		data.scaleTo = 0;
+		data.scaleAnimator = new AnimatorIn();
+		data.scaleAnimator = new AnimatorOut();
+		data.scaleAnimator = new AnimatorLinear();
+		data.scaleYAnimator = new AnimatorLinear();
+//		data.scaleAnimator = null;
+
+//		data.spinFrom = -180;
+//		data.spinFromDelta = -30;
+//		data.spinTo = -1600;
+//		data.spinToDelta = -60;
+//		data.spinAnimator = new AnimatorLinear();
+
+		data.angleFrom = 0;
+		data.angleFromDelta = 0;
+		data.angleTo = 1600;
+		data.angleToDelta = 600;
+		data.angleAnimator = new AnimatorLinear();
+
+		data.alphaFrom = 1;
+		data.alphaFromDelta = 0;
+		data.alphaTo = 0;
+		data.alphaToDelta = 0;
+		data.alphaAnimator = new AnimatorLinear();
+
 		return data;
 	}
 

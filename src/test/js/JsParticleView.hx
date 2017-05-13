@@ -11,6 +11,8 @@ class JsParticleView implements IParticleView {
 	@:isVar public var scaleX(get, set):Float;
 	@:isVar public var scaleY(get, set):Float;
 	public var scale(default, set):Float = 1;
+	@:isVar public var angle(get, set):Float;
+	@:isVar public var alpha(get, set):Float;
 
 	static public var ctx:CanvasRenderingContext2D = null;
 
@@ -35,9 +37,10 @@ class JsParticleView implements IParticleView {
 
 	function draw() {
 		if(ctx != null) {
+			var rad:Float = angle * Math.PI / 180;
 			ctx.beginPath();
-			ctx.ellipse(x, y, _radius * scaleX, _radius * scaleY, 45 * Math.PI/180, 0, 2 * Math.PI);
-			ctx.fillStyle = "#FF0000";
+			ctx.ellipse(x, y, _radius * scaleX, _radius * scaleY, angle * Math.PI / 180, 0, 2 * Math.PI);
+			ctx.fillStyle = 'rgba(255, 0, 0, $alpha)';
 			ctx.fill();
 		}
 	}
@@ -75,6 +78,26 @@ class JsParticleView implements IParticleView {
 		}
 		draw();
 		return scale;
+	}
+
+	function get_angle():Float {
+		return angle;
+	}
+
+	function set_angle(value:Float):Float {
+		angle = value;
+		draw();
+		return angle;
+	}
+
+	function get_alpha():Float {
+		return alpha;
+	}
+
+	function set_alpha(value:Float):Float {
+		alpha = value;
+		draw();
+		return alpha;
 	}
 
 	function get_x():Float {

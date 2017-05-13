@@ -6,19 +6,34 @@ import hxdispose.Dispose;
 class Particle implements IParticle {
 	public var x(get, set):Float;
 	public var y(get, set):Float;
+	public var isLife(get, never):Bool;
+
+	public var lifetime:Float = -1.0;
+	public var time:Float = 0;
+
 	public var scaleX:Float = 1;
 	public var scaleXDelta:Float = 0;
 	public var scaleXAnimator:IAnimator = null;
 	public var scaleY:Float = 1;
 	public var scaleYDelta:Float = 0;
 	public var scaleYAnimator:IAnimator = null;
-	public var isLife(get, never):Bool;
 
-	public var lifetime:Float = -1.0;
-	public var time:Float = 0;
+	public var angle:Float = 0;
+	public var angleDelta:Float = 0;
+	public var angleAnimator:IAnimator = null;
+	public var spin:Float = 0;
+	public var spinDelta:Float = 0;
+	public var spinAnimator:IAnimator = null;
 
-	public var xVelocity:Float = .0;
-	public var yVelocity:Float = .0;
+	public var alpha:Float = 1;
+	public var alphaDelta:Float = 0;
+	public var alphaAnimator:IAnimator = null;
+
+	public var xVelocity:Float = 0;
+	public var xVelocityDelta:Float = 0;
+	public var yVelocity:Float = 0;
+	public var yVelocityDelta:Float = 0;
+	public var velocityAnimator:IAnimator = null;
 
 	var _view:IParticleView = null;
 
@@ -40,6 +55,16 @@ class Particle implements IParticle {
 
 		_view.scaleX = scaleX + calculateValue(k, scaleXDelta, scaleXAnimator);
 		_view.scaleY = scaleY + calculateValue(k, scaleYDelta, scaleYAnimator);
+		if(spin != 0 || spinDelta != 0) {
+			_view.angle += (spin + calculateValue(k, spinDelta, spinAnimator)) * (dt / 1000);
+		}
+		else {
+			_view.angle = angle + calculateValue(k, angleDelta, angleAnimator);
+		}
+		_view.alpha = alpha + calculateValue(k, alphaDelta, alphaAnimator);
+
+		_view.x = _view.x + (xVelocity + calculateValue(k, xVelocityDelta, velocityAnimator)) * dt / 1000;
+		_view.y = _view.y + (yVelocity + calculateValue(k, yVelocityDelta, velocityAnimator)) * dt / 1000;
 	}
 
 	public function clone():IParticle {
@@ -47,7 +72,7 @@ class Particle implements IParticle {
 	}
 
 	inline function calculateValue(progress:Float, value:Float, animator:IAnimator):Float {
-		return animator == null ? value * progress : animator.calculate(progress, value);
+		return animator == null ? 0 : animator.calculate(progress, value);
 	}
 
 	function get_isLife():Bool {

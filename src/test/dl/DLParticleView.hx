@@ -9,6 +9,8 @@ class DLParticleView implements IParticleView {
 	public var y(get, set):Float;
 	public var scaleX(get, set):Float;
 	public var scaleY(get, set):Float;
+	public var angle(get, set):Float;
+	public var alpha(get, set):Float;
 
 	public var shape:Shape = null;
 
@@ -19,6 +21,7 @@ class DLParticleView implements IParticleView {
 		shape = new Shape();
 		shape.graphics.beginFill(0xFF0000);
 		shape.graphics.drawCircle(0, 0, radius);
+//		shape.graphics.drawRect(0, 0, radius, radius);
 		shape.graphics.endFill();
 
 		Lib.current.addChild(shape);
@@ -48,6 +51,22 @@ class DLParticleView implements IParticleView {
 
 	function set_scaleY(value:Float):Float {
 		return shape.scaleY = value;
+	}
+
+	function get_angle():Float {
+		return shape.rotation;
+	}
+
+	function set_angle(value:Float):Float {
+		return shape.rotation = value;
+	}
+
+	function get_alpha():Float {
+		return shape.alpha;
+	}
+
+	function set_alpha(value:Float):Float {
+		return shape.alpha = value;
 	}
 
 	function get_x():Float {

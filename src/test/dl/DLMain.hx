@@ -1,5 +1,8 @@
 package test.dl;
 
+import hxfireflies.animators.AnimatorLinear;
+import hxfireflies.animators.AnimatorOut;
+import hxfireflies.animators.AnimatorIn;
 import hxfireflies.particle.Particle;
 import hxfireflies.emitter.EmitterData;
 import hxfireflies.emitter.IEmitterData;
@@ -37,10 +40,43 @@ class DLMain {
 		var data:EmitterData = new EmitterData();
 		data.lifetime = 500;
 		data.lifetimeDelta = 1500;
-		data.scaleFrom = 1;
-		data.scaleTo = 0;
-		data.scaleYFrom = 1;
+		data.scaleSimple = false;
+		data.scaleFrom = 0.5;
+		data.scaleFromDelta = 1;
+		data.scaleYFrom = 0.5;
+		data.scaleYFromDelta = 1;
 		data.scaleYTo = 0;
+		data.scaleTo = 0;
+		data.scaleAnimator = new AnimatorIn();
+		data.scaleAnimator = new AnimatorOut();
+		data.scaleAnimator = new AnimatorLinear();
+		data.scaleYAnimator = new AnimatorLinear();
+//		data.scaleAnimator = null;
+
+//		data.spinFrom = -180;
+//		data.spinFromDelta = -30;
+//		data.spinTo = -1600;
+//		data.spinToDelta = -60;
+//		data.spinAnimator = new AnimatorLinear();
+
+		data.angleFrom = 0;
+		data.angleFromDelta = 0;
+		data.angleTo = 1600;
+		data.angleToDelta = 600;
+		data.angleAnimator = new AnimatorLinear();
+
+		data.alphaFrom = 1;
+		data.alphaFromDelta = 0;
+		data.alphaTo = 0;
+		data.alphaToDelta = 0;
+		data.alphaAnimator = new AnimatorLinear();
+
+		data.velocityFrom = 30;
+		data.velocityFromDelta = 20;
+		data.velocityTo = 70;
+		data.velocityToDelta = 40;
+		data.velocityAnimator = new AnimatorOut();
+
 		return data;
 	}
 
