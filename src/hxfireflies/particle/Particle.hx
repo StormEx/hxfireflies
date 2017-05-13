@@ -36,6 +36,9 @@ class Particle implements IParticle {
 	public var yVelocityDelta:Float = 0;
 	public var velocityAnimator:IAnimator = null;
 
+	public var xForce:Float = 0;
+	public var yForce:Float = 0;
+
 	var _view:IParticleView = null;
 
 	public function new(view:IParticleView) {
@@ -64,12 +67,12 @@ class Particle implements IParticle {
 		}
 		_view.alpha = alpha + calculateValue(k, alphaDelta, alphaAnimator);
 
-		x += (xVelocity + calculateValue(k, xVelocityDelta, velocityAnimator)) * dt / 1000;
-		y += (yVelocity + calculateValue(k, yVelocityDelta, velocityAnimator)) * dt / 1000;
-
 		if(force != null) {
 			force.apply(this);
 		}
+
+		x += (xVelocity + calculateValue(k, xVelocityDelta, velocityAnimator) + xForce) * dt / 1000;
+		y += (yVelocity + calculateValue(k, yVelocityDelta, velocityAnimator) + yForce) * dt / 1000;
 	}
 
 	public function clone():IParticle {

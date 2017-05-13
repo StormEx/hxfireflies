@@ -95,8 +95,8 @@ class EmitterData implements IEmitterData {
 		particle.yVelocityDelta = vy * delta;
 		particle.velocityAnimator = velocityAnimator;
 
-//		particle.xVelocity = 80;
-//		particle.yVelocity = 0;
+		particle.xForce = 0;
+		particle.yForce = 0;
 
 		particle.update(0);
 

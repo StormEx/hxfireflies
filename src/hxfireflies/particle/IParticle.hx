@@ -37,6 +37,9 @@ interface IParticle extends IDisposable {
 	public var yVelocityDelta:Float;
 	public var velocityAnimator:IAnimator;
 
+	public var xForce:Float;
+	public var yForce:Float;
+
 	public function update(dt:Float, force:IForce = null):Void;
 	public function clone():IParticle;
 }
