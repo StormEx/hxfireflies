@@ -1,5 +1,6 @@
 package hxfireflies.emitter;
 
+import hxfireflies.forces.IForce;
 import hxfireflies.particle.IParticleView;
 import hxfireflies.particle.IParticle;
 import hxfireflies.particle.Particle;
@@ -44,10 +45,10 @@ class Emitter extends Particle implements IEmitter {
 		pool.alloc(count, data);
 	}
 
-	override public function update(dt:Float) {
-		super.update(dt);
+	override public function update(dt:Float, force:IForce = null) {
+		super.update(dt, null);
 
-		pool.update(dt);
+		pool.update(dt, force);
 		_time += dt;
 	}
 

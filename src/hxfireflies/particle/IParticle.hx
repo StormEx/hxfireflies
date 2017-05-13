@@ -1,5 +1,6 @@
 package hxfireflies.particle;
 
+import hxfireflies.forces.IForce;
 import hxfireflies.animators.IAnimator;
 import hxdispose.IDisposable;
 
@@ -36,6 +37,6 @@ interface IParticle extends IDisposable {
 	public var yVelocityDelta:Float;
 	public var velocityAnimator:IAnimator;
 
-	public function update(dt:Float):Void;
+	public function update(dt:Float, force:IForce = null):Void;
 	public function clone():IParticle;
 }

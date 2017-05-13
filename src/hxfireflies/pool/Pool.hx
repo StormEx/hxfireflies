@@ -1,5 +1,6 @@
 package hxfireflies.pool;
 
+import hxfireflies.forces.IForce;
 import hxfireflies.emitter.IEmitterData;
 import hxfireflies.particle.IParticleView;
 import hxfireflies.particle.Particle;
@@ -26,10 +27,10 @@ class Pool implements IPool {
 		Dispose.disposeIterable(_pool);
 	}
 
-	public function update(dt:Float) {
+	public function update(dt:Float, force:IForce) {
 		var i:Int = 0;
 		while(i < _count) {
-			_pool[i].update(dt);
+			_pool[i].update(dt, force);
 			if(!_pool[i].isLife) {
 				remove(i);
 			}

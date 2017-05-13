@@ -6,8 +6,8 @@ import js.html.CanvasElement;
 import hxfireflies.particle.IParticleView;
 
 class JsParticleView implements IParticleView {
-	@:isVar public var x(get, set):Float;
-	@:isVar public var y(get, set):Float;
+	public var x(get, set):Float;
+	public var y(get, set):Float;
 	@:isVar public var scaleX(get, set):Float;
 	@:isVar public var scaleY(get, set):Float;
 	public var scale(default, set):Float = 1;
@@ -17,6 +17,8 @@ class JsParticleView implements IParticleView {
 	static public var ctx:CanvasRenderingContext2D = null;
 
 	var _radius:Float = 20;
+	var _x:Float = 0;
+	var _y:Float = 0;
 
 	public function new(radius:Float = 20) {
 		_radius = radius;
@@ -39,7 +41,7 @@ class JsParticleView implements IParticleView {
 		if(ctx != null) {
 			var rad:Float = angle * Math.PI / 180;
 			ctx.beginPath();
-			ctx.ellipse(x, y, _radius * scaleX, _radius * scaleY, angle * Math.PI / 180, 0, 2 * Math.PI);
+			ctx.ellipse(_x, _y, _radius * scaleX, _radius * scaleY, angle * Math.PI / 180, 0, 2 * Math.PI);
 			ctx.fillStyle = 'rgba(255, 0, 0, $alpha)';
 			ctx.fill();
 		}
@@ -101,22 +103,22 @@ class JsParticleView implements IParticleView {
 	}
 
 	function get_x():Float {
-		return x;
+		return _x;
 	}
 
 	function set_x(value:Float):Float {
-		x = value;
+		_x = value;
 		draw();
-		return x;
+		return _x;
 	}
 
 	function get_y():Float {
-		return y;
+		return _y;
 	}
 
 	function set_y(value:Float):Float {
-		y = value;
+		_y = value;
 		draw();
-		return y;
+		return _y;
 	}
 }

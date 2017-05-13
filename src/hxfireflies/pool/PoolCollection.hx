@@ -1,5 +1,6 @@
 package hxfireflies.pool;
 
+import hxfireflies.forces.IForce;
 import hxfireflies.emitter.IEmitterData;
 
 class PoolCollection implements IPool {
@@ -13,9 +14,9 @@ class PoolCollection implements IPool {
 	public function dispose() {
 	}
 
-	public function update(dt:Float) {
+	public function update(dt:Float, force:IForce) {
 		for(p in _pools) {
-			p.update(dt);
+			p.update(dt, force);
 		}
 	}
 
