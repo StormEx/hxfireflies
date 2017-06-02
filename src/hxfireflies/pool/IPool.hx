@@ -9,4 +9,6 @@ interface IPool extends IDisposable {
 
 	public function update(dt:Float, force:IForce):Void;
 	public function alloc(count:Int, data:IEmitterData):Void;
+	public function reset():Void;
+	public function clone():IPool;
 }

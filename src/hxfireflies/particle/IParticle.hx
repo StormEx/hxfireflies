@@ -8,6 +8,7 @@ interface IParticle extends IDisposable {
 	public var x(get, set):Float;
 	public var y(get, set):Float;
 	public var isLife(get, never):Bool;
+	public var enable(default, set):Bool;
 
 	public var lifetime:Float;
 	public var time:Float;

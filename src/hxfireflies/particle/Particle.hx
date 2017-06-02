@@ -8,6 +8,7 @@ class Particle implements IParticle {
 	public var x(get, set):Float;
 	public var y(get, set):Float;
 	public var isLife(get, never):Bool;
+	public var enable(default, set):Bool;
 
 	public var lifetime:Float = -1.0;
 	public var time:Float = 0;
@@ -85,6 +86,16 @@ class Particle implements IParticle {
 
 	function get_isLife():Bool {
 		return lifetime < 0 || lifetime > time;
+	}
+
+	public function set_enable(value:Bool):Bool {
+		if(enable != value) {
+			enable = value;
+
+			_view.visible = value;
+		}
+
+		return enable;
 	}
 
 	function get_x():Float {

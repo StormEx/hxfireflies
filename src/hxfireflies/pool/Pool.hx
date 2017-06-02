@@ -2,8 +2,6 @@ package hxfireflies.pool;
 
 import hxfireflies.forces.IForce;
 import hxfireflies.emitter.IEmitterData;
-import hxfireflies.particle.IParticleView;
-import hxfireflies.particle.Particle;
 import hxfireflies.particle.IParticle;
 import hxdispose.Dispose;
 
@@ -19,8 +17,6 @@ class Pool implements IPool {
 		if(max > 0) {
 			_max = max;
 		}
-
-		prototype = createPrototype(null);
 	}
 
 	public function dispose() {
@@ -42,9 +38,12 @@ class Pool implements IPool {
 
 	public function alloc(count:Int, data:IEmitterData) {
 		for(i in 0...count) {
+			if(_count >= _max) {
+				return;
+			}
+
 			var p:IParticle = null;
-			if(_count < _pool.length)
-			{
+			if(_count < _pool.length) {
 				p = _pool[_count];
 			}
 			else {
@@ -53,9 +52,24 @@ class Pool implements IPool {
 				trace(_pool.length);
 
 			}
+			p.enable = true;
 			data.setup(p);
 			++_count;
 		}
+	}
+
+	public function reset() {
+		for(i in 0..._count) {
+			_pool[i].enable = false;
+		}
+		_count = 0;
+	}
+
+	public function clone():IPool {
+		var p:Pool = new Pool();
+		p.prototype = prototype.clone();
+
+		return p;
 	}
 
 	function remove(index:Int) {
@@ -63,13 +77,10 @@ class Pool implements IPool {
 		var tmp:IParticle = _pool[index];
 		_pool[index] = _pool[_count];
 		_pool[_count] = tmp;
+		tmp.enable = false;
 	}
 
 	function increasePool() {
-	}
-
-	function createPrototype(view:IParticleView):IParticle {
-		return new Particle(view);
 	}
 
 	inline function set_prototype(value:IParticle):IParticle {

@@ -10,5 +10,7 @@ interface IParticleView extends IDisposable {
 	public var angle(get, set):Float;
 	public var alpha(get, set):Float;
 
+	public var visible(get, set):Bool;
+
 	public function clone():IParticleView;
 }

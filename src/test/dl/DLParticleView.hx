@@ -12,16 +12,24 @@ class DLParticleView implements IParticleView {
 	public var angle(get, set):Float;
 	public var alpha(get, set):Float;
 
+	public var visible(get, set):Bool;
+
 	public var shape:Shape = null;
 
 	var _radius:Float = 20;
+	var _alt:Bool = false;
 
-	public function new(radius:Float = 20) {
+	public function new(radius:Float = 20, alt:Bool = false) {
+		_alt = alt;
 		_radius = radius;
 		shape = new Shape();
 		shape.graphics.beginFill(0xFF0000);
-		shape.graphics.drawCircle(0, 0, radius);
-//		shape.graphics.drawRect(0, 0, radius, radius);
+		if(alt) {
+			shape.graphics.drawRect(0, 0, radius, radius);
+		}
+		else {
+			shape.graphics.drawCircle(0, 0, radius);
+		}
 		shape.graphics.endFill();
 
 		Lib.current.addChild(shape);
@@ -34,7 +42,7 @@ class DLParticleView implements IParticleView {
 	}
 
 	public function clone():IParticleView {
-		return new DLParticleView(_radius);
+		return new DLParticleView(_radius, _alt);
 	}
 
 	function get_scaleX():Float {
@@ -67,6 +75,14 @@ class DLParticleView implements IParticleView {
 
 	function set_alpha(value:Float):Float {
 		return shape.alpha = value;
+	}
+
+	function get_visible():Bool {
+		return shape.visible;
+	}
+
+	function set_visible(value:Bool):Bool {
+		return shape.visible = value;
 	}
 
 	function get_x():Float {

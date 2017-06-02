@@ -12,6 +12,9 @@ import hxfireflies.area.PointArea;
 import hxfireflies.area.IArea;
 
 class Emitter extends Particle implements IEmitter {
+	public var spawnCount:Int = 1;
+	public var spawnInterval:Float = 1000;
+
 	public var data(default, set):IEmitterData;
 
 	public var pool(default, set):IPool;
@@ -46,14 +49,23 @@ class Emitter extends Particle implements IEmitter {
 	}
 
 	override public function update(dt:Float, force:IForce = null) {
-		super.update(dt, null);
+		super.update(dt, force);
 
 		pool.update(dt, force);
 		_time += dt;
+		if(_time >= spawnInterval && enable) {
+			_time = 0;
+
+			pool.alloc(spawnCount, data);
+		}
 	}
 
 	override public function clone():IParticle {
 		return null;
+	}
+
+	override function get_isLife():Bool {
+		return super.isLife || pool.length > 0;
 	}
 
 	function createArea():IArea {
@@ -87,6 +99,18 @@ class Emitter extends Particle implements IEmitter {
 				$delta = 1.0 - $comp;
 			}
 		};
+	}
+
+	override public function set_enable(value:Bool):Bool {
+		trace(value);
+		if(enable != value) {
+			super.enable = value;
+			if(!enable) {
+				pool.reset();
+			}
+		}
+
+		return enable;
 	}
 
 	function get_data():IEmitterData {

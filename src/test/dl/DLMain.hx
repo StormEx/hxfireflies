@@ -17,6 +17,10 @@ class DLMain extends BaseMain {
 		return new DLParticleView(size);
 	}
 
+	override function createAltParticleView(size:Float = 10):IParticleView {
+		return new DLParticleView(size, true);
+	}
+
 	override function getTime():Float {
 		return Lib.getTimer();
 	}

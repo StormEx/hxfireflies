@@ -1,5 +1,7 @@
 package test;
 
+import hxfireflies.area.ArcArea;
+import hxfireflies.emitter.EmitterData;
 import hxfireflies.particle.IParticleView;
 import hxfireflies.forces.ForceGravity;
 import hxfireflies.forces.ForceCollection;
@@ -21,18 +23,33 @@ class BaseMain {
 	var time:Float = 0;
 	var _emitter:IEmitter;
 	var _rEmitter:IEmitter;
+	var _eEmitter:IEmitter;
 	var _force:ForceCollection;
 
 	public function new() {
 		_force = new ForceCollection();
 		_force.add(new ForceGravity(2));
+		_force.enable = true;
 
 		var p:Pool;
 		time = getTime();
 		_emitter = new DLEmitter(createParticleView());
-		_emitter.pool = createPool();
+		_emitter.pool = createPool(true);
 		_emitter.data = createEmitterData();
 		_emitter.data.area = new CircleArea(14);
+		_emitter.spawnInterval = 200;
+		_eEmitter = new DLEmitter(createParticleView());
+		_eEmitter.pool = createPool();
+		_eEmitter.data = createEmitterData();
+//		_eEmitter.data.area = new CircleArea(14);
+		_eEmitter.data.area = new ArcArea(14, 180, 360);
+		var d:EmitterData = cast _eEmitter.data;
+		d.velocityFrom = 70;
+		d.velocityTo = 140;
+		var p:Pool = cast _eEmitter.pool;
+		p.prototype = _emitter.clone();
+		_eEmitter.spawnInterval = 1500;
+		_eEmitter.enable = true;
 		_rEmitter = new DLEmitter(createParticleView());
 		_rEmitter.pool = createPool();
 		_rEmitter.data = createEmitterData();
@@ -85,9 +102,9 @@ class BaseMain {
 		return data;
 	}
 
-	function createPool():IPool {
+	function createPool(alt:Bool = false):IPool {
 		var p:Pool = new Pool();
-		p.prototype = new Particle(createParticleView(12));
+		p.prototype = new Particle(alt ? createAltParticleView(12) : createParticleView(12));
 
 		return p;
 	}
@@ -102,7 +119,7 @@ class BaseMain {
 		val = Math.cos(v * 2 * Math.PI);
 		_emitter.x = 400 + val * 200;
 //		heart(v, _emitter);
-		_emitter.update(dt, null);
+//		_emitter.update(dt, null);
 
 		v = (cur % 3000) / 3000;
 		_rEmitter.y = 240;
@@ -115,8 +132,13 @@ class BaseMain {
 		if(a != null) {
 			a.angleFrom = a.angleTo = v * 360;
 		}
-		_rEmitter.update(dt, _force);
-		_force.enable = a.angleFrom >= 0 && a.angleFrom <= 180;
+//		_rEmitter.update(dt, _force);
+//		_force.enable = a.angleFrom >= 0 && a.angleFrom <= 180;
+
+		_eEmitter.y = 240;
+		_eEmitter.x = 400;
+		_eEmitter.update(dt, _force);
+
 		time = cur;
 	}
 
@@ -149,6 +171,10 @@ class BaseMain {
 	}
 
 	function createParticleView(size:Float = 20):IParticleView {
+		return null;
+	}
+
+	function createAltParticleView(size:Float = 20):IParticleView {
 		return null;
 	}
 
