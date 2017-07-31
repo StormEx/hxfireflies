@@ -8,15 +8,14 @@ import hxdispose.Dispose;
 class Pool implements IPool {
 	public var prototype(default, set):IParticle;
 	public var length(get, never):Int;
+	public var maxLength(get, set):Int;
 
 	var _pool:Array<IParticle> = [];
 	var _count:Int = 0;
 	var _max:Int = 50;
 
 	public function new(max:Int = 50) {
-		if(max > 0) {
-			_max = max;
-		}
+		maxLength = max;
 	}
 
 	public function dispose() {
@@ -80,6 +79,13 @@ class Pool implements IPool {
 		tmp.enable = false;
 	}
 
+	function clamp() {
+		while(_pool.length > maxLength) {
+			var p:IParticle = _pool.pop();
+			Dispose.dispose(p);
+		}
+	}
+
 	function increasePool() {
 	}
 
@@ -92,5 +98,19 @@ class Pool implements IPool {
 
 	function get_length():Int {
 		return _count;
+	}
+
+	function get_maxLength():Int {
+		return _max;
+	}
+
+	function set_maxLength(value:Int):Int {
+		if(value > 0 && value != _max) {
+			_max = value;
+
+			clamp();
+		}
+
+		return _max;
 	}
 }

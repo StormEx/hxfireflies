@@ -5,6 +5,7 @@ import hxfireflies.emitter.IEmitterData;
 
 class PoolCollection implements IPool {
 	public var length(get, never):Int;
+	public var maxLength(get, set):Int;
 
 	var _pools:Array<IPool> = [];
 
@@ -35,5 +36,13 @@ class PoolCollection implements IPool {
 		}
 
 		return res;
+	}
+
+	function get_maxLength():Int {
+		return 0;
+	}
+
+	function set_maxLength(value:Int):Int {
+		return 0;
 	}
 }
