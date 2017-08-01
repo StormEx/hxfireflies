@@ -3,7 +3,7 @@ package hxfireflies.forces;
 import hxfireflies.particle.IParticle;
 
 class Force implements IForce {
-	public var enable:Bool = true;
+	public var enabled(default, set):Bool = true;
 
 	var _xVelocity:Float = 0;
 	var _yVelocity:Float = 0;
@@ -15,9 +15,13 @@ class Force implements IForce {
 	}
 
 	public function apply(particle:IParticle) {
-		if(enable) {
+		if(enabled) {
 			particle.xForce += _xVelocity;
 			particle.yForce += _yVelocity;
 		}
+	}
+
+	function set_enabled(value:Bool):Bool {
+		return enabled = value;
 	}
 }

@@ -29,7 +29,7 @@ class BaseMain {
 	public function new() {
 		_force = new ForceCollection();
 		_force.add(new ForceGravity(2));
-		_force.enable = true;
+		_force.enabled = true;
 
 		var p:Pool;
 		time = getTime();
