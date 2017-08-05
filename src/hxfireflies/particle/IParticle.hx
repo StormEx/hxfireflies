@@ -11,7 +11,7 @@ interface IParticle extends IDisposable {
 	public var enable(default, set):Bool;
 
 	public var lifetime:Float;
-	public var time:Float;
+	public var age:Float;
 
 	public var scaleX:Float;
 	public var scaleXDelta:Float;
@@ -38,8 +38,8 @@ interface IParticle extends IDisposable {
 	public var yVelocityDelta:Float;
 	public var velocityAnimator:IAnimator;
 
-	public var xForce:Float;
-	public var yForce:Float;
+	public var xForceVelocity:Float;
+	public var yForceVelocity:Float;
 
 	public function update(dt:Float, force:IForce = null):Void;
 	public function clone():IParticle;

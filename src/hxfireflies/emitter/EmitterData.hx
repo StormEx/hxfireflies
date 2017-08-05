@@ -57,7 +57,7 @@ class EmitterData implements IEmitterData {
 	public function setup(particle:IParticle):IParticle {
 		area.setup(particle);
 
-		particle.time = 0;
+		particle.age = 0;
 		particle.lifetime = calculateValue(lifetime, lifetimeDelta);
 		if(scaleSimple) {
 			particle.scaleY = particle.scaleX = calculateValue(scaleFrom, scaleFromDelta);
@@ -95,8 +95,8 @@ class EmitterData implements IEmitterData {
 		particle.yVelocityDelta = vy * delta;
 		particle.velocityAnimator = velocityAnimator;
 
-		particle.xForce = 0;
-		particle.yForce = 0;
+		particle.xForceVelocity = 0;
+		particle.yForceVelocity = 0;
 
 		particle.update(0);
 

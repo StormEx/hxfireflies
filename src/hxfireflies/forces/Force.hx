@@ -16,8 +16,8 @@ class Force implements IForce {
 
 	public function apply(particle:IParticle) {
 		if(enabled) {
-			particle.xForce += _xVelocity;
-			particle.yForce += _yVelocity;
+			particle.xForceVelocity += _xVelocity;
+			particle.yForceVelocity += _yVelocity;
 		}
 	}
 
