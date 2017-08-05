@@ -1,6 +1,5 @@
 package hxfireflies.particle;
 
-import hxfireflies.forces.IForce;
 import hxfireflies.animators.IAnimator;
 import hxdispose.Dispose;
 
@@ -50,12 +49,14 @@ class Particle implements IParticle {
 		Dispose.dispose(_view);
 	}
 
-	public function update(dt:Float, force:IForce = null) {
+	public function update(dt:Float) {
 		var k:Float = 1;
 		if(lifetime >= 0) {
 			time += dt;
 
-			k = time / lifetime;
+			if(time < lifetime) {
+				k = time / lifetime;
+			}
 		}
 
 		_view.scaleX = scaleX + calculateValue(k, scaleXDelta, scaleXAnimator);
@@ -67,10 +68,6 @@ class Particle implements IParticle {
 			_view.angle = angle + calculateValue(k, angleDelta, angleAnimator);
 		}
 		_view.alpha = alpha + calculateValue(k, alphaDelta, alphaAnimator);
-
-		if(force != null) {
-			force.apply(this);
-		}
 
 		x += (xVelocity + calculateValue(k, xVelocityDelta, velocityAnimator) + xForce) * dt / 1000;
 		y += (yVelocity + calculateValue(k, yVelocityDelta, velocityAnimator) + yForce) * dt / 1000;
