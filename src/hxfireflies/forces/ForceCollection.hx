@@ -3,7 +3,7 @@ package hxfireflies.forces;
 import hxfireflies.particle.IParticle;
 
 class ForceCollection implements IForce {
-	public var enable:Bool = true;
+	public var enabled(default, set):Bool = true;
 
 	var _forces:Array<IForce> = [];
 
@@ -28,10 +28,14 @@ class ForceCollection implements IForce {
 	}
 
 	public function apply(particle:IParticle) {
-		if(enable) {
+		if(enabled) {
 			for(f in _forces) {
 				f.apply(particle);
 			}
 		}
+	}
+
+	function set_enabled(value:Bool):Bool {
+		return enabled = value;
 	}
 }

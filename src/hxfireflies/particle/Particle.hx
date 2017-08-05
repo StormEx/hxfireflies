@@ -10,7 +10,7 @@ class Particle implements IParticle {
 	public var enable(default, set):Bool;
 
 	public var lifetime:Float = -1.0;
-	public var time:Float = 0;
+	public var age:Float = 0;
 
 	public var scaleX:Float = 1;
 	public var scaleXDelta:Float = 0;
@@ -36,8 +36,8 @@ class Particle implements IParticle {
 	public var yVelocityDelta:Float = 0;
 	public var velocityAnimator:IAnimator = null;
 
-	public var xForce:Float = 0;
-	public var yForce:Float = 0;
+	public var xForceVelocity:Float = 0;
+	public var yForceVelocity:Float = 0;
 
 	var _view:IParticleView = null;
 
@@ -51,12 +51,10 @@ class Particle implements IParticle {
 
 	public function update(dt:Float) {
 		var k:Float = 1;
-		if(lifetime >= 0) {
-			time += dt;
 
-			if(time < lifetime) {
-				k = time / lifetime;
-			}
+		age += dt;
+		if(lifetime >= 0 && age < lifetime) {
+			k = age / lifetime;
 		}
 
 		_view.scaleX = scaleX + calculateValue(k, scaleXDelta, scaleXAnimator);
@@ -69,8 +67,8 @@ class Particle implements IParticle {
 		}
 		_view.alpha = alpha + calculateValue(k, alphaDelta, alphaAnimator);
 
-		x += (xVelocity + calculateValue(k, xVelocityDelta, velocityAnimator) + xForce) * dt / 1000;
-		y += (yVelocity + calculateValue(k, yVelocityDelta, velocityAnimator) + yForce) * dt / 1000;
+		x += (xVelocity + calculateValue(k, xVelocityDelta, velocityAnimator) + xForceVelocity) * dt / 1000;
+		y += (yVelocity + calculateValue(k, yVelocityDelta, velocityAnimator) + yForceVelocity) * dt / 1000;
 	}
 
 	public function clone():IParticle {
@@ -82,7 +80,7 @@ class Particle implements IParticle {
 	}
 
 	function get_isLife():Bool {
-		return lifetime < 0 || lifetime > time;
+		return lifetime < 0 || lifetime > age;
 	}
 
 	public function set_enable(value:Bool):Bool {
