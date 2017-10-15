@@ -14,6 +14,10 @@ class ForceCollection implements IForce {
 		_forces.push(force);
 	}
 
+	public function clear() {
+		_forces = [];
+	}
+
 	public function remove(force:IForce) {
 		var index:Int = _forces.indexOf(force);
 		if(index != -1) {
