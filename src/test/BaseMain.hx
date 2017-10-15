@@ -49,6 +49,7 @@ class BaseMain {
 		var p:Pool = cast _eEmitter.pool;
 		p.prototype = _emitter.clone();
 		_eEmitter.spawnInterval = 1500;
+		_eEmitter.spawnCount = 1;
 		_eEmitter.enable = true;
 		_eEmitter.force = _force;
 		_rEmitter = new DLEmitter(createParticleView());
@@ -106,6 +107,7 @@ class BaseMain {
 	function createPool(alt:Bool = false):IPool {
 		var p:Pool = new Pool();
 		p.prototype = new Particle(alt ? createAltParticleView(12) : createParticleView(12));
+		p.maxLength = 5000;
 
 		return p;
 	}

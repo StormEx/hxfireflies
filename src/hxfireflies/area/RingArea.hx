@@ -17,14 +17,17 @@ class RingArea implements IArea {
 	}
 
 	public function setup(particle:IParticle):IParticle {
+		var min:Float = minRadius > maxRadius ? maxRadius : minRadius;
+		var max:Float = minRadius > maxRadius ? minRadius : maxRadius;
+		var dir:Int = minRadius > maxRadius ? -1 : 1;
 		var angle:Float = Math.random() * 2 * Math.PI;
-		var size:Float = minRadius + Math.random() * (maxRadius - minRadius);
+		var size:Float = min + Math.random() * (max - min);
 		var kx:Float = Math.cos(angle);
 		var ky:Float = Math.sin(angle);
 		particle.x = x + kx * size;
 		particle.y = y + ky * size;
-		particle.xVelocity = kx;
-		particle.yVelocity = ky;
+		particle.xVelocity = kx * dir;
+		particle.yVelocity = ky * dir;
 
 		return particle;
 	}

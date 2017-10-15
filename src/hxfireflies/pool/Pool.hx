@@ -51,11 +51,10 @@ class Pool implements IPool {
 			else {
 				p = prototype.clone();
 				_pool.push(p);
-				trace(_pool.length);
 
 			}
-			p.enable = true;
 			data.setup(p);
+			p.enable = true;
 			++_count;
 		}
 	}

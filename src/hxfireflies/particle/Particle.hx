@@ -57,15 +57,17 @@ class Particle implements IParticle {
 			k = age / lifetime;
 		}
 
-		_view.scaleX = scaleX + calculateValue(k, scaleXDelta, scaleXAnimator);
-		_view.scaleY = scaleY + calculateValue(k, scaleYDelta, scaleYAnimator);
-		if(spin != 0 || spinDelta != 0) {
-			_view.angle += (spin + calculateValue(k, spinDelta, spinAnimator)) * (dt / 1000);
+		if(_view != null) {
+			_view.scaleX = scaleX + calculateValue(k, scaleXDelta, scaleXAnimator);
+			_view.scaleY = scaleY + calculateValue(k, scaleYDelta, scaleYAnimator);
+			if(spin != 0 || spinDelta != 0) {
+				_view.angle += (spin + calculateValue(k, spinDelta, spinAnimator)) * (dt / 1000);
+			}
+			else {
+				_view.angle = angle + calculateValue(k, angleDelta, angleAnimator);
+			}
+			_view.alpha = alpha + calculateValue(k, alphaDelta, alphaAnimator);
 		}
-		else {
-			_view.angle = angle + calculateValue(k, angleDelta, angleAnimator);
-		}
-		_view.alpha = alpha + calculateValue(k, alphaDelta, alphaAnimator);
 
 		x += (xVelocity + calculateValue(k, xVelocityDelta, velocityAnimator) + xForceVelocity) * dt / 1000;
 		y += (yVelocity + calculateValue(k, yVelocityDelta, velocityAnimator) + yForceVelocity) * dt / 1000;
@@ -87,7 +89,9 @@ class Particle implements IParticle {
 		if(enable != value) {
 			enable = value;
 
-			_view.visible = value;
+			if(_view != null) {
+				_view.visible = value;
+			}
 		}
 
 		return enable;

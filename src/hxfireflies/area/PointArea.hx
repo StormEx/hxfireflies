@@ -16,6 +16,11 @@ class PointArea implements IArea {
 	}
 
 	public function setup(particle:IParticle):IParticle {
+		var angle:Float = Math.random() * 2 * Math.PI;
+		var kx:Float = Math.cos(angle);
+		var ky:Float = Math.sin(angle);
+		particle.xVelocity = kx;
+		particle.yVelocity = ky;
 		particle.x = x;
 		particle.y = y;
 

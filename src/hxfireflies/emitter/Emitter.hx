@@ -67,7 +67,6 @@ class Emitter extends Particle implements IEmitter {
 	}
 
 	override public function set_enable(value:Bool):Bool {
-		trace(value);
 		if(enable != value) {
 			super.enable = value;
 			if(!enable) {
@@ -88,12 +87,24 @@ class Emitter extends Particle implements IEmitter {
 
 	override function set_x(value:Float):Float {
 		data.area.x = value;
-		return super.set_x(value);
+		super.set_x(value);
+
+		return data.area.x;
+	}
+
+	override function get_x():Float {
+		return data.area.x;
 	}
 
 	override function set_y(value:Float):Float {
 		data.area.y = value;
-		return super.set_y(value);
+		super.set_y(value);
+
+		return data.area.y;
+	}
+
+	override function get_y():Float {
+		return data.area.y;
 	}
 
 	function set_pool(value:IPool):IPool {
