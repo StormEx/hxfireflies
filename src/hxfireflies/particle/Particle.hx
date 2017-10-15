@@ -1,6 +1,5 @@
 package hxfireflies.particle;
 
-import hxfireflies.forces.IForce;
 import hxfireflies.animators.IAnimator;
 import hxdispose.Dispose;
 
@@ -50,26 +49,24 @@ class Particle implements IParticle {
 		Dispose.dispose(_view);
 	}
 
-	public function update(dt:Float, force:IForce = null) {
+	public function update(dt:Float) {
 		var k:Float = 1;
 
 		age += dt;
-		if(lifetime >= 0) {
+		if(lifetime >= 0 && age < lifetime) {
 			k = age / lifetime;
 		}
 
-		_view.scaleX = scaleX + calculateValue(k, scaleXDelta, scaleXAnimator);
-		_view.scaleY = scaleY + calculateValue(k, scaleYDelta, scaleYAnimator);
-		if(spin != 0 || spinDelta != 0) {
-			_view.angle += (spin + calculateValue(k, spinDelta, spinAnimator)) * (dt / 1000);
-		}
-		else {
-			_view.angle = angle + calculateValue(k, angleDelta, angleAnimator);
-		}
-		_view.alpha = alpha + calculateValue(k, alphaDelta, alphaAnimator);
-
-		if(force != null) {
-			force.apply(this);
+		if(_view != null) {
+			_view.scaleX = scaleX + calculateValue(k, scaleXDelta, scaleXAnimator);
+			_view.scaleY = scaleY + calculateValue(k, scaleYDelta, scaleYAnimator);
+			if(spin != 0 || spinDelta != 0) {
+				_view.angle += (spin + calculateValue(k, spinDelta, spinAnimator)) * (dt / 1000);
+			}
+			else {
+				_view.angle = angle + calculateValue(k, angleDelta, angleAnimator);
+			}
+			_view.alpha = alpha + calculateValue(k, alphaDelta, alphaAnimator);
 		}
 
 		x += (xVelocity + calculateValue(k, xVelocityDelta, velocityAnimator) + xForceVelocity) * dt / 1000;
@@ -92,7 +89,9 @@ class Particle implements IParticle {
 		if(enable != value) {
 			enable = value;
 
-			_view.visible = value;
+			if(_view != null) {
+				_view.visible = value;
+			}
 		}
 
 		return enable;

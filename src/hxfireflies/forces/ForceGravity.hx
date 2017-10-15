@@ -1,10 +1,10 @@
 package hxfireflies.forces;
 
 class ForceGravity extends Force {
-	public function new(value:Float = 2) {
+	public function new(valueY:Float = 2, valueX:Float = 0) {
 		super();
 
-		_xVelocity = 0;
-		_yVelocity = value;
+		_xVelocity = valueX;
+		_yVelocity = valueY;
 	}
 }

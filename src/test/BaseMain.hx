@@ -49,7 +49,9 @@ class BaseMain {
 		var p:Pool = cast _eEmitter.pool;
 		p.prototype = _emitter.clone();
 		_eEmitter.spawnInterval = 1500;
+		_eEmitter.spawnCount = 1;
 		_eEmitter.enable = true;
+		_eEmitter.force = _force;
 		_rEmitter = new DLEmitter(createParticleView());
 		_rEmitter.pool = createPool();
 		_rEmitter.data = createEmitterData();
@@ -105,6 +107,7 @@ class BaseMain {
 	function createPool(alt:Bool = false):IPool {
 		var p:Pool = new Pool();
 		p.prototype = new Particle(alt ? createAltParticleView(12) : createParticleView(12));
+		p.maxLength = 5000;
 
 		return p;
 	}
@@ -119,7 +122,7 @@ class BaseMain {
 		val = Math.cos(v * 2 * Math.PI);
 		_emitter.x = 400 + val * 200;
 //		heart(v, _emitter);
-//		_emitter.update(dt, null);
+		_emitter.update(dt);
 
 		v = (cur % 3000) / 3000;
 		_rEmitter.y = 240;
@@ -137,7 +140,7 @@ class BaseMain {
 
 		_eEmitter.y = 240;
 		_eEmitter.x = 400;
-		_eEmitter.update(dt, _force);
+		_eEmitter.update(dt);
 
 		time = cur;
 	}

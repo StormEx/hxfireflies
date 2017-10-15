@@ -6,7 +6,6 @@ import hxfireflies.particle.IParticle;
 import hxfireflies.particle.Particle;
 import hxfireflies.pool.Pool;
 import hxfireflies.pool.IPool;
-import haxe.macro.Expr;
 import hxdispose.Dispose;
 import hxfireflies.area.PointArea;
 import hxfireflies.area.IArea;
@@ -16,17 +15,8 @@ class Emitter extends Particle implements IEmitter {
 	public var spawnInterval:Float = 1000;
 
 	public var data(default, set):IEmitterData;
-
 	public var pool(default, set):IPool;
-
-	public var r(default, set):Float = 1.0;
-	public var rDelta(default, set):Float = .0;
-	public var g(default, set):Float = 1.0;
-	public var gDelta(default, set):Float = .0;
-	public var b(default, set):Float = 1.0;
-	public var bDelta(default, set):Float = .0;
-	public var a(default, set):Float = 1.0;
-	public var aDelta(default, set):Float = .0;
+	public var force(default, set):IForce;
 
 	var _time:Float = 0;
 
@@ -34,8 +24,6 @@ class Emitter extends Particle implements IEmitter {
 		super(view);
 
 		pool = createPool();
-
-		normalize();
 	}
 
 	override public function dispose() {
@@ -48,12 +36,14 @@ class Emitter extends Particle implements IEmitter {
 		pool.alloc(count, data);
 	}
 
-	override public function update(dt:Float, force:IForce = null) {
-		super.update(dt, force);
+	override public function update(dt:Float) {
+		if(super.isLife) {
+			super.update(dt);
+		}
 
 		pool.update(dt, force);
 		_time += dt;
-		if(_time >= spawnInterval && enable) {
+		if(_time >= spawnInterval && super.isLife && enable) {
 			_time = 0;
 
 			pool.alloc(spawnCount, data);
@@ -76,33 +66,7 @@ class Emitter extends Particle implements IEmitter {
 		return new Pool();
 	}
 
-	function normalize() {
-		normalizeColor(r, rDelta);
-		normalizeColor(g, gDelta);
-		normalizeColor(b, bDelta);
-		normalizeColor(a, aDelta);
-	}
-
-	macro static function normalizeColor(comp:Expr, delta:Expr) {
-		return macro {
-			if($comp > 1.0) {
-				$comp = 1.0;
-			}
-			else if($comp < .0) {
-				$comp = .0;
-			}
-
-			if($delta < .0) {
-				$delta = .0;
-			}
-			else if($comp + $delta > 1.0) {
-				$delta = 1.0 - $comp;
-			}
-		};
-	}
-
 	override public function set_enable(value:Bool):Bool {
-		trace(value);
 		if(enable != value) {
 			super.enable = value;
 			if(!enable) {
@@ -123,15 +87,27 @@ class Emitter extends Particle implements IEmitter {
 
 	override function set_x(value:Float):Float {
 		data.area.x = value;
-		return super.set_x(value);
+		super.set_x(value);
+
+		return data.area.x;
+	}
+
+	override function get_x():Float {
+		return data.area.x;
 	}
 
 	override function set_y(value:Float):Float {
 		data.area.y = value;
-		return super.set_y(value);
+		super.set_y(value);
+
+		return data.area.y;
 	}
 
-	inline function set_pool(value:IPool):IPool {
+	override function get_y():Float {
+		return data.area.y;
+	}
+
+	function set_pool(value:IPool):IPool {
 		if(pool != value) {
 			pool = value == null ? createPool() : value;
 		}
@@ -139,83 +115,7 @@ class Emitter extends Particle implements IEmitter {
 		return pool;
 	}
 
-	inline function set_r(value:Float):Float {
-		if(r != value) {
-			r = value;
-
-			normalizeColor(r, rDelta);
-		}
-
-		return r;
-	}
-
-	inline function set_rDelta(value:Float):Float {
-		if(rDelta != value) {
-			rDelta = value;
-
-			normalizeColor(r, rDelta);
-		}
-
-		return rDelta;
-	}
-
-	inline function set_g(value:Float):Float {
-		if(g != value) {
-			g = value;
-
-			normalizeColor(g, gDelta);
-		}
-
-		return g;
-	}
-
-	inline function set_gDelta(value:Float):Float {
-		if(gDelta != value) {
-			gDelta = value;
-
-			normalizeColor(g, gDelta);
-		}
-
-		return gDelta;
-	}
-
-	inline function set_b(value:Float):Float {
-		if(b != value) {
-			b = value;
-
-			normalizeColor(b, bDelta);
-		}
-
-		return b;
-	}
-
-	inline function set_bDelta(value:Float):Float {
-		if(bDelta != value) {
-			bDelta = value;
-
-			normalizeColor(b, bDelta);
-		}
-
-		return bDelta;
-	}
-
-	inline function set_a(value:Float):Float {
-		if(a != value) {
-			a = value;
-
-			normalizeColor(a, aDelta);
-		}
-
-		return a;
-	}
-
-	inline function set_aDelta(value:Float):Float {
-		if(aDelta != value) {
-			aDelta = value;
-
-			normalizeColor(a, aDelta);
-		}
-
-		return aDelta;
+	function set_force(value:IForce):IForce {
+		return force = value;
 	}
 }

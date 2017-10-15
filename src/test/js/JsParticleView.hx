@@ -21,8 +21,10 @@ class JsParticleView implements IParticleView {
 	var _radius:Float = 20;
 	var _x:Float = 0;
 	var _y:Float = 0;
+	var _alt:Bool = false;
 
-	public function new(radius:Float = 20) {
+	public function new(radius:Float = 20, alt:Bool = false) {
+		_alt = alt;
 		_radius = radius;
 		if(ctx == null) {
 			var canvas:CanvasElement = cast Browser.document.getElementById('canvas');
@@ -36,14 +38,19 @@ class JsParticleView implements IParticleView {
 	}
 
 	public function clone():IParticleView {
-		return new JsParticleView(_radius);
+		return new JsParticleView(_radius, _alt);
 	}
 
 	function draw() {
 		if(ctx != null && visible) {
 			var rad:Float = angle * Math.PI / 180;
 			ctx.beginPath();
-			ctx.ellipse(_x, _y, _radius * scaleX, _radius * scaleY, angle * Math.PI / 180, 0, 2 * Math.PI);
+			if(_alt) {
+				ctx.rect(_x, _y, _radius * scaleX, _radius * scaleY);
+			}
+			else {
+				ctx.ellipse(_x, _y, _radius * scaleX, _radius * scaleY, angle * Math.PI / 180, 0, 2 * Math.PI);
+			}
 			ctx.fillStyle = 'rgba(255, 0, 0, $alpha)';
 			ctx.fill();
 		}

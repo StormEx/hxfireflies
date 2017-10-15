@@ -25,7 +25,10 @@ class Pool implements IPool {
 	public function update(dt:Float, force:IForce) {
 		var i:Int = 0;
 		while(i < _count) {
-			_pool[i].update(dt, force);
+			if(force != null) {
+				force.apply(_pool[i]);
+			}
+			_pool[i].update(dt);
 			if(!_pool[i].isLife) {
 				remove(i);
 			}
@@ -48,11 +51,10 @@ class Pool implements IPool {
 			else {
 				p = prototype.clone();
 				_pool.push(p);
-				trace(_pool.length);
 
 			}
-			p.enable = true;
 			data.setup(p);
+			p.enable = true;
 			++_count;
 		}
 	}

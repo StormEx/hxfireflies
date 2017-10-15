@@ -9,6 +9,10 @@ class JsMain extends BaseMain {
 		return new JsParticleView(size);
 	}
 
+	override function createAltParticleView(size:Float = 20):IParticleView {
+		return new JsParticleView(size, true);
+	}
+
 	override function getTime():Float {
 		var d:Date = Date.now();
 		return d.getTime();

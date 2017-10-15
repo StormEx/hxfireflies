@@ -9,7 +9,7 @@ class ArcArea implements IArea {
 	public var angleFrom:Float;
 	public var angleTo:Float;
 
-	public function new(radius:Float = 100.0, from:Float, to:Float) {
+	public function new(radius:Float = 100.0, from:Float = 0, to:Float = 180) {
 		this.radius = radius;
 		angleFrom = from;
 		angleTo = to;
